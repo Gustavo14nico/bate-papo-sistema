@@ -197,4 +197,4 @@ app.get("/logado", (req, res) => {
 //    console.log(`Rodando na porta ${PORTA}`);
 // });
 
-module.exports = app;
+export default app;
