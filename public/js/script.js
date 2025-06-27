@@ -1,5 +1,3 @@
-const API = "http://localhost:3000";
-
 function mostrarLogin() {
   alternarSecao("loginSection");
 }
@@ -33,7 +31,7 @@ async function fazerLogin() {
   const login = document.getElementById("login").value;
   const senha = document.getElementById("senha").value;
 
-  const res = await fetch(`${API}/login`, {
+  const res = await fetch(`/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -61,7 +59,7 @@ async function cadastrarUsuario() {
     return;
   }
 
-  const res = await fetch(`${API}/cadastrar`, {
+  const res = await fetch(`/cadastrar`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -78,7 +76,7 @@ async function cadastrarUsuario() {
 }
 
 async function listarUsuarios() {
-  const res = await fetch(`${API}/usuarios`, { credentials: "include" });
+  const res = await fetch(`/usuarios`, { credentials: "include" });
   const data = await res.json();
   const listaDiv = document.getElementById("listaUsuarios");
 
@@ -88,7 +86,7 @@ async function listarUsuarios() {
 }
 
 async function carregarAssuntos() {
-  const res = await fetch(`${API}/assuntos`);
+  const res = await fetch(`/assuntos`);
   const data = await res.json();
   const selectCadastro = document.getElementById("assuntoPreferido");
   const selectChat = document.getElementById("chatAssuntoSelect");
@@ -106,7 +104,7 @@ async function carregarMensagens() {
   const assunto = document.getElementById("chatAssuntoSelect").value;
   if (!assunto) return;
 
-  const res = await fetch(`${API}/mensagens/${assunto}`, { credentials: "include" });
+  const res = await fetch(`/mensagens/${assunto}`, { credentials: "include" });
   const data = await res.json();
 
   const mensagensDiv = document.getElementById("mensagensContainer");
@@ -121,7 +119,7 @@ async function enviarMensagem() {
 
   if (!texto || !assunto) return;
 
-  await fetch(`${API}/mensagens/${assunto}`, {
+  await fetch(`/mensagens/${assunto}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -133,13 +131,13 @@ async function enviarMensagem() {
 }
 
 async function fazerLogout() {
-  await fetch(`${API}/logout`, { method: "POST", credentials: "include" });
+  await fetch(`/logout`, { method: "POST", credentials: "include" });
   mostrarLogin();
 }
 
 async function verificarSessao() {
   try {
-    const res = await fetch(`${API}/logado`, { credentials: "include" });
+    const res = await fetch(`/logado`, { credentials: "include" });
     if (res.ok) {
       mostrarMenu();
       await carregarAssuntos();
@@ -151,7 +149,6 @@ async function verificarSessao() {
     mostrarLogin();
   }
 }
-
 
 verificarSessao();
 carregarAssuntos();
